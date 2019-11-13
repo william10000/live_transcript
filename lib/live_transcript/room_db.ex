@@ -6,7 +6,7 @@ defmodule LiveTranscript.RoomDB do
     GenServer.call(room_db, {:create_room, room})
   end
 
-  def name_taken?(name, room_db \\ __MODULE__) do
+  def room_exists?(name, room_db \\ __MODULE__) do
     :ets.member(room_db, name)
   end
 

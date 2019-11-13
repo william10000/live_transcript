@@ -49,15 +49,15 @@ defmodule LiveTranscript.RoomDBTest do
     end
   end
 
-  describe "name_taken?/1" do
+  describe "room_exists?/1" do
     test "with a fresh name is false", %{table: table} do
-      refute RoomDB.name_taken?("test", table)
+      refute RoomDB.room_exists?("test", table)
     end
 
     test "With a taken name is true", %{table: table, pid: pid} do
-      refute RoomDB.name_taken?("test", table)
+      refute RoomDB.room_exists?("test", table)
       {:ok, _} = RoomDB.create_room(%Room{name: "test"}, pid)
-      assert RoomDB.name_taken?("test", table)
+      assert RoomDB.room_exists?("test", table)
     end
   end
 end
