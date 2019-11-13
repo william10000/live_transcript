@@ -5,6 +5,7 @@ defmodule LiveTranscript.Application do
 
   def start(_type, _args) do
     children = [
+      LiveTranscript.RoomDB,
       LiveTranscriptWeb.Endpoint
     ]
 
