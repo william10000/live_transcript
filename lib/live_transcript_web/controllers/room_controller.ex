@@ -1,8 +1,8 @@
 defmodule LiveTranscriptWeb.RoomController do
   use LiveTranscriptWeb, :controller
 
-  def new(_conn, _params) do
-    raise "Not Implememented"
+  def new(conn, _params) do
+    render(conn, "new.html")
   end
 
   def show(_conn, _params) do

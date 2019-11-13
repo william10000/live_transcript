@@ -3,7 +3,7 @@ defmodule LiveTranscriptWeb.RoomControllerTest do
 
   test "GET /rooms/new", %{conn: conn} do
     conn = get(conn, "/rooms/new")
-    assert html_response(conn, 200) =~ "App"
+    assert html_response(conn, 200) =~ "Create a Room"
   end
 
   describe "GET /rooms/:id" do
