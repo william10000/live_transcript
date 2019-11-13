@@ -17,5 +17,6 @@ defmodule LiveTranscriptWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/rooms", RoomController, only: [:new, :show, :create]
   end
 end
