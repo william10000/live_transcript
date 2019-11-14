@@ -9,13 +9,15 @@ defmodule LiveTranscriptWeb.RoomControllerTest do
 
   describe "GET /rooms/:id" do
     test "With a real room returns the room", %{conn: conn} do
-      conn = get(conn, "/rooms/real")
-      assert html_response(conn, 200) =~ "App"
+      name = unique_name()
+      RoomDB.create_room(%Room{name: name})
+      conn = get(conn, "/rooms/#{name}")
+      assert html_response(conn, 200) =~ "Room #{name}"
     end
 
-    test "With a fake room shows a not found", %{conn: conn} do
-      conn = get(conn, "/rooms/fake")
-      assert html_response(conn, 403) =~ "App"
+    test "With a non existant room shows a not found", %{conn: conn} do
+      conn = get(conn, "/rooms/#{unique_name()}")
+      assert html_response(conn, 200) =~ "Not Found"
     end
   end
 
@@ -30,7 +32,7 @@ defmodule LiveTranscriptWeb.RoomControllerTest do
       name = unique_name()
       RoomDB.create_room(%Room{name: name})
       conn = post(conn, "/rooms", %{name: name})
-      assert html_response(conn, 200) =~ "Name Taken!"
+      assert html_response(conn, 302)
     end
   end
 

@@ -6,8 +6,14 @@ defmodule LiveTranscriptWeb.RoomController do
     render(conn, "new.html")
   end
 
-  def show(_conn, _params) do
-    raise "Not Implememented"
+  def show(conn, %{"id" => name}) do
+    case RoomDB.get_room(name, get_room_db()) do
+      {:ok, room} ->
+        render(conn, "show.html", room: room)
+
+      {:error, :not_found} ->
+        render(conn, "not_found.html")
+    end
   end
 
   def create(conn, %{"name" => name}) do

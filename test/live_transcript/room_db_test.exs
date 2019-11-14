@@ -35,7 +35,7 @@ defmodule LiveTranscript.RoomDBTest do
       |> Enum.each(&assert_raise FunctionClauseError, &1)
     end
 
-    test "you can create a room that has a unique name", %{pid: pid, table: table} do
+    test "you can create a room that has a unique name", %{pid: pid} do
       room = %Room{name: "test"}
       assert {:ok, room} = RoomDB.create_room(room, pid)
     end
