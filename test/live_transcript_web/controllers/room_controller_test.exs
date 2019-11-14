@@ -1,5 +1,6 @@
 defmodule LiveTranscriptWeb.RoomControllerTest do
   use LiveTranscriptWeb.ConnCase
+  alias LiveTranscript.{Room, RoomDB}
 
   test "GET /rooms/new", %{conn: conn} do
     conn = get(conn, "/rooms/new")
@@ -20,13 +21,20 @@ defmodule LiveTranscriptWeb.RoomControllerTest do
 
   describe "POST /rooms" do
     test "With a unique name", %{conn: conn} do
-      conn = post(conn, "/rooms", %{name: "unique"})
-      assert redirected_to(conn, 302) =~ "/rooms/unique"
+      name = unique_name()
+      conn = post(conn, "/rooms", %{name: name})
+      assert redirected_to(conn, 302) =~ "/rooms/#{name}"
     end
 
     test "With a taken name", %{conn: conn} do
-      conn = post(conn, "/rooms", %{name: "taken"})
-      assert html_response(conn, 422) =~ "taken"
+      name = unique_name()
+      RoomDB.create_room(%Room{name: name})
+      conn = post(conn, "/rooms", %{name: name})
+      assert html_response(conn, 200) =~ "Name Taken!"
     end
+  end
+
+  defp unique_name do
+    "#{:erlang.unique_integer()}"
   end
 end
