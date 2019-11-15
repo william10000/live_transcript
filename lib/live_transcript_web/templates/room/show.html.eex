@@ -1,0 +1,1 @@
+<p>Room <%= @room.name %></p>
