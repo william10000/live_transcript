@@ -11,7 +11,11 @@ use Mix.Config
 # before starting your production server.
 config :live_transcript, LiveTranscriptWeb.Endpoint,
   url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  live_view: [
+    signing_salt: SYSTEM.fetch_env!("SIGNING_SALT")
+  ]
+
 
 # Do not print debug messages in production
 config :logger, level: :info

@@ -1,6 +1,8 @@
 defmodule LiveTranscriptWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :live_transcript
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", LiveTranscriptWeb.UserSocket,
     websocket: true,
     longpoll: false

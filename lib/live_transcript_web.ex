@@ -6,6 +6,7 @@ defmodule LiveTranscriptWeb do
       import Plug.Conn
       import LiveTranscriptWeb.Gettext
       alias LiveTranscriptWeb.Router.Helpers, as: Routes
+      import Phoenix.LiveView.Controller
     end
   end
 
@@ -32,6 +33,7 @@ defmodule LiveTranscriptWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 
