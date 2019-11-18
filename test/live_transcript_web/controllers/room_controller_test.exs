@@ -1,6 +1,6 @@
 defmodule LiveTranscriptWeb.RoomControllerTest do
   use LiveTranscriptWeb.ConnCase
-  alias LiveTranscript.{Room, RoomDB}
+  alias LiveTranscript.RoomDB
 
   test "GET /rooms/new", %{conn: conn} do
     conn = get(conn, "/rooms/new")
@@ -10,7 +10,7 @@ defmodule LiveTranscriptWeb.RoomControllerTest do
   describe "GET /rooms/:id" do
     test "With a real room returns the room", %{conn: conn} do
       name = unique_name()
-      RoomDB.create_room(%Room{name: name})
+      RoomDB.create_room(name)
       conn = get(conn, "/rooms/#{name}")
       assert html_response(conn, 200) =~ "Room #{name}"
     end
@@ -30,7 +30,7 @@ defmodule LiveTranscriptWeb.RoomControllerTest do
 
     test "With a taken name", %{conn: conn} do
       name = unique_name()
-      RoomDB.create_room(%Room{name: name})
+      RoomDB.create_room(name)
       conn = post(conn, "/rooms", %{name: name})
       assert html_response(conn, 302)
     end

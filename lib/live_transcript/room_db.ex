@@ -2,7 +2,8 @@ defmodule LiveTranscript.RoomDB do
   use GenServer
   alias LiveTranscript.Room
 
-  def create_room(room = %Room{name: name}, room_db \\ __MODULE__) when is_binary(name) do
+  def create_room(name, room_db \\ __MODULE__) when is_binary(name) do
+    room = Room.new(name: name)
     GenServer.call(room_db, {:create_room, room})
   end
 
