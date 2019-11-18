@@ -7,6 +7,7 @@ defmodule LiveTranscriptWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Phoenix.LiveView.Flash
   end
 
   pipeline :api do
@@ -15,6 +16,10 @@ defmodule LiveTranscriptWeb.Router do
 
   scope "/", LiveTranscriptWeb do
     pipe_through :browser
+
+    scope "/test" do
+      live "/counter", CounterLive
+    end
 
     get "/", PageController, :index
     resources "/rooms", RoomController, only: [:new, :show, :create]

@@ -12,7 +12,10 @@ config :live_transcript, LiveTranscriptWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "oJVkaHb4ePrmyIZB4IE/ABLpVHL3KFDv2QtEwievauqVD0Wqoksz8k4ZmujpXBZY",
   render_errors: [view: LiveTranscriptWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: LiveTranscript.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: LiveTranscript.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+    signing_salt: "SIGNING_SALT"
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
