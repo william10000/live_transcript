@@ -1,5 +1,4 @@
 defmodule LiveTranscript.RoomDBTest do
-  alias LiveTranscript.Room
   alias LiveTranscript.RoomDB
 
   use ExUnit.Case
@@ -25,25 +24,22 @@ defmodule LiveTranscript.RoomDBTest do
   end
 
   describe "create_room/1" do
-    test "trying to create a room without a room struct + a string name key raises an error" do
+    test "trying to create a room without a string name key raises an error" do
       [
-        fn -> RoomDB.create_room(%{}) end,
-        fn -> RoomDB.create_room(%{name: "test"}) end,
-        fn -> RoomDB.create_room(%Room{name: :a}) end,
-        fn -> RoomDB.create_room(%Room{name: 1}) end
+        fn -> RoomDB.create_room(:a) end,
+        fn -> RoomDB.create_room(1) end
       ]
       |> Enum.each(&assert_raise FunctionClauseError, &1)
     end
 
     test "you can create a room that has a unique name", %{pid: pid} do
-      room = %Room{name: "test"}
-      assert {:ok, room} = RoomDB.create_room(room, pid)
+      assert {:ok, room = %{name: "test"}} = RoomDB.create_room("test", pid)
+      assert is_reference(room.uuid)
     end
 
     test "trying to create a room with a name that is taken will result in an error", %{pid: pid} do
-      room = %Room{name: "test"}
-      assert {:ok, ^room} = RoomDB.create_room(room, pid)
-      assert {:error, :name_taken} = RoomDB.create_room(room, pid)
+      assert {:ok, %{name: "test"}} = RoomDB.create_room("test", pid)
+      assert {:error, :name_taken} = RoomDB.create_room("test", pid)
     end
   end
 
@@ -54,7 +50,7 @@ defmodule LiveTranscript.RoomDBTest do
 
     test "With a taken name is true", %{table: table, pid: pid} do
       refute RoomDB.room_exists?("test", table)
-      {:ok, _} = RoomDB.create_room(%Room{name: "test"}, pid)
+      {:ok, _} = RoomDB.create_room("test", pid)
       assert RoomDB.room_exists?("test", table)
     end
   end
@@ -65,9 +61,8 @@ defmodule LiveTranscript.RoomDBTest do
     end
 
     test "trying to get a room that exists brings back the room", %{pid: pid, table: table} do
-      room = %Room{name: "test"}
-      {:ok, _} = RoomDB.create_room(room, pid)
-      assert {:ok, ^room} = RoomDB.get_room("test", table)
+      {:ok, _} = RoomDB.create_room("test", pid)
+      assert {:ok, %{name: name}} = RoomDB.get_room("test", table)
     end
   end
 end

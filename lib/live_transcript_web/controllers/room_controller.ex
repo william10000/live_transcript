@@ -1,6 +1,6 @@
 defmodule LiveTranscriptWeb.RoomController do
   use LiveTranscriptWeb, :controller
-  alias LiveTranscript.{Room, RoomDB}
+  alias LiveTranscript.RoomDB
 
   def new(conn, _params) do
     render(conn, "new.html")
@@ -17,7 +17,7 @@ defmodule LiveTranscriptWeb.RoomController do
   end
 
   def create(conn, %{"name" => name}) do
-    case RoomDB.create_room(%Room{name: name}, get_room_db()) do
+    case RoomDB.create_room(name, get_room_db()) do
       {:ok, room} ->
         redirect(conn, to: Routes.room_path(conn, :show, room.name))
 
