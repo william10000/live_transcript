@@ -17,7 +17,6 @@ config :live_transcript, LiveTranscriptWeb.Endpoint,
     signing_salt: "SIGNING_SALT"
   ]
 
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

@@ -17,6 +17,10 @@ defmodule LiveTranscriptWeb.Router do
   scope "/", LiveTranscriptWeb do
     pipe_through :browser
 
+    scope "/test" do
+      live "/counter", CounterLive
+    end
+
     get "/", PageController, :index
     resources "/rooms", RoomController, only: [:new, :show, :create]
   end

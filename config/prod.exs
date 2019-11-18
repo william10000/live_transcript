@@ -16,7 +16,6 @@ config :live_transcript, LiveTranscriptWeb.Endpoint,
     signing_salt: SYSTEM.fetch_env!("SIGNING_SALT")
   ]
 
-
 # Do not print debug messages in production
 config :logger, level: :info
 
